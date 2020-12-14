@@ -26,11 +26,11 @@ module Enumerable
     self
   end
 
-  # # 2. my_each_with_index
-  # puts 'my_each_with_index'
-  # puts '------------------'
-  # print [1, 2, 3].my_each_with_index { |elem, idx| puts "#{elem} : #{idx}" } # => 1 : 0, 2 : 1, 3 : 2
-  # puts
+  # 2. my_each_with_index
+  puts 'my_each_with_index'
+  puts '------------------'
+  print([1, 2, 3].my_each_with_index { |elem, idx| puts "#{elem} : #{idx}" }) # => 1 : 0, 2 : 1, 3 : 2
+  puts
 
   # # 3. my_select
   # puts 'my_select'
