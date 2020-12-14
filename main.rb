@@ -10,12 +10,12 @@ module Enumerable
   end
 end
 
-# 1. my_each
-puts 'my_each'
-puts '-------'
-puts([1, 2, 3].my_each { |elem| print "#{elem + 1} " }) # => 2 3 4
-p (5..10).my_each { |i| puts i.to_s }
-puts
+# # 1. my_each
+# puts 'my_each'
+# puts '-------'
+# puts([1, 2, 3].my_each { |elem| print "#{elem + 1} " }) # => 2 3 4
+# p (5..10).my_each { |i| puts i.to_s }
+# puts
 
 # # 2. my_each_with_index
 # puts 'my_each_with_index'
