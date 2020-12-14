@@ -40,14 +40,14 @@ module Enumerable
     arr
   end
 
-  # # 3. my_select
-  # puts 'my_select'
-  # puts '---------'
-  # p [1, 2, 3, 8].my_select(&:even?) # => [2, 8]
-  # p [0, 2018, 1994, -7].my_select { |n| n > 0 } # => [2018, 1994]
-  # p [6, 11, 13].my_select(&:odd?) # => [11, 13]
-  # p (1..5).my_select(&:odd?) # => [1, 3, 5]
-  # puts
+  # 3. my_select
+  puts 'my_select'
+  puts '---------'
+  p [1, 2, 3, 8].my_select(&:even?) # => [2, 8]
+  p [0, 2018, 1994, -7].my_select { |n| n > 0 } # => [2018, 1994]
+  p [6, 11, 13].my_select(&:odd?) # => [11, 13]
+  p (1..5).my_select(&:odd?) # => [1, 3, 5]
+  puts
 
   # # 4. my_all? (example test cases)
   # puts 'my_all?'
