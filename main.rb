@@ -82,7 +82,17 @@ module Enumerable
   false_block = proc { |n| n < 5 }
   p (1..5).my_all?(&false_block) # false
   p [1, 2.2, 3, 0.6].my_all? #=> True
-  p
+  puts
+
+  def my_any?(*arg, &block)
+    if block_given?
+      my_select(&block).size.positive?
+    else
+      return !(my_select { |i| [nil, false].include?(i) }).size.positive? if arg == []
+      return (my_select { |i| i.instance_of?(arg[0]) }).size.positive? if arg.is_a? Class
+      return (my_select { |i| i.instance_of?(arg[0]) }).size.positive? if arg[0].class < Numeric
+    end
+  end
 
   # # 5. my_any? (example test cases)
   # puts 'my_any?'
