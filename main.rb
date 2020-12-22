@@ -1,7 +1,9 @@
 module Enumerable
   def my_each
-    i = 0
+    return to_enum(:my_each) unless block_given?
+
     arr = to_a
+    i = 0
     while i < arr.size
       yield(arr[i])
       i += 1
@@ -9,35 +11,33 @@ module Enumerable
     self
   end
 
-  # # 1. my_each
-  # puts 'my_each'
-  # puts '-------'
-  # puts([1, 2, 3].my_each { |elem| print "#{elem + 1} " }) # => 2 3 4
-  # p (5..10).my_each { |i| puts i.to_s }
-  # puts
+  # 1. my_each
+  puts 'my_each'
+  puts '-------'
+  puts([1, 2, 3].each { |elem| print "#{elem + 1} " }) # => 2 3 4
+  p(5..10).each { |i| puts i.to_s }
+  puts
 
   def my_each_with_index
-    i = 0
+    return to_enum(:my_each) unless block_given?
+
     arr = to_a
-    while i < arr.size
+    i = 0
+    arr.my_each do
       yield(arr[i], i)
       i += 1
     end
     self
   end
 
-  # # 2. my_each_with_index
-  # puts 'my_each_with_index'
-  # puts '------------------'
-  # print([1, 2, 3].my_each_with_index { |elem, idx| puts "#{elem} : #{idx}" }) # => 1 : 0, 2 : 1, 3 : 2
-  # puts
+  # 2. my_each_with_index
+  puts 'my_each_with_index'
+  puts '------------------'
+  print([1, 2, 3].my_each_with_index { |elem, idx| puts "#{elem} : #{idx}" }) # => 1 : 0, 2 : 1, 3 : 2
+  puts
 
   def my_select
-    arr = []
-    my_each do |i|
-      arr << i if yield(i)
-    end
-    arr
+    return to_enum(:my_each) unless block_given?
   end
 
   # 3. my_select
