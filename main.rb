@@ -82,7 +82,7 @@ module Enumerable
   false_block = proc { |n| n < 5 }
   p (1..5).my_all?(&false_block) # false
   p [1, 2.2, 3, 0.6].my_all? #=> True
-  puts
+  p
 
   # # 5. my_any? (example test cases)
   # puts 'my_any?'
