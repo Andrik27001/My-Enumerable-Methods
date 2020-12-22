@@ -38,6 +38,12 @@ module Enumerable
 
   def my_select
     return to_enum(:my_each) unless block_given?
+
+    arr = []
+    my_each do |i|
+      arr << i if yield(i)
+    end
+    arr
   end
 
   # 3. my_select
@@ -49,39 +55,50 @@ module Enumerable
   p (1..5).my_select(&:odd?) # => [1, 3, 5]
   puts
 
-  # # 4. my_all? (example test cases)
-  # puts 'my_all?'
-  # puts '-------'
-  # p [3, 5, 7, 11].my_all?(&:odd?) # => true
-  # p [-8, -9, -6].my_all? { |n| n < 0 } # => true
-  # p [3, 5, 8, 11].my_all?(&:odd?) # => false
-  # p [-8, -9, -6, 0].my_all? { |n| n < 0 } # => false
-  # # test cases required by tse reviewer
-  # p [1, 2, 3, 4, 5].my_all? # => true
-  # p [1, 2, 3, false].my_all? # => false
-  # p [1, 2, 3].my_all?(Integer) # => true
-  # p %w[dog door rod blade].my_all?(/d/) # => true
-  # p [1, 1, 1].my_all?(1) # => true
-  # false_block = proc { |n| n<5 }
-  # p (1..5).my_all?(&false_block) # false
-  # p [1, 2.2, 3, 0.6].my_all?( ) #=> True
-  # puts
+  def my_all?(*arg, &block)
+    return my_select(&block).size == size if block_given?
+    return !(include?(false) || include?(nil)) if arg == []
+    return (my_select { |i| i.instance_of?(arg[0]) }).size == size if arg[0].is_a? Class
+    return (my_select { |i| i.match(arg[0]) }).size == size if arg[0].is_a? Regexp
+    return (my_select { |i| i == (arg[0]) }).size == size if arg[0].class < Numeric
+    return (my_select { |i| i == (arg[0]) }).size == size if arg[0].is_a? String
+
+    false
+  end
+
+  # 4. my_all? (example test cases)
+  puts 'my_all?'
+  puts '-------'
+  p [3, 5, 7, 11].my_all?(&:odd?) # => true
+  p([-8, -9, -6].my_all?(&:negative?)) # => true
+  p [3, 5, 8, 11].my_all?(&:odd?) # => false
+  p([-8, -9, -6, 0].my_all?(&:negative?)) # => false
+  # test cases required by tse reviewer
+  p [1, 2, 3, 4, 5].my_all? # => true
+  p [1, 2, 3, false].my_all? # => false
+  p [1, 2, 3].my_all?(Integer) # => true
+  p %w[dog door rod blade].my_all?(/d/) # => true
+  p [1, 1, 1].my_all?(1) # => true
+  false_block = proc { |n| n < 5 }
+  p (1..5).my_all?(&false_block) # false
+  p [1, 2.2, 3, 0.6].my_all? #=> True
+  puts
 
   # # 5. my_any? (example test cases)
   # puts 'my_any?'
   # puts '-------'
   # p [7, 10, 4, 5].my_any?(&:even?) # => true
-  # p %w[q r s i].my_any? { |char| 'aeiou'.include?(char) } # => true
+  # p(%w[q r s i].my_any? { |char| 'aeiou'.include?(char) }) # => true
   # p [7, 11, 3, 5].my_any?(&:even?) # => false
-  # p %w[q r s t].my_any? { |char| 'aeiou'.include?(char) } # => false
+  # p(%w[q r s t].my_any? { |char| 'aeiou'.include?(char) }) # => false
   # # test cases required by tse reviewer
   # p [3, 5, 4, 11].my_any? # => true
-  # p "yo? #{[nil, false, nil, false].my_any?}" # => false
+  # p [nil, false, nil, false].my_any? # => false
   # p [1, nil, false].my_any?(1) # => true
   # p [1.1, nil, false].my_any?(Numeric) # => true
-  # p %w[dog door rod blade].my_any?(/z/) # => false
+  # p(%w[dog door rod blade].my_any?(/z/)) # => false
   # p [1, 2, 3].my_any?(1) # => true
-  # p ["a", "cat", "dog"].my_any?('cat') #=>true
+  # p(%w[a cat dog].my_any?('cat')) #=>true
   # puts
 
   # # 6. my_none? (example test cases)
